@@ -1,3 +1,4 @@
+package GUI;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -8,15 +9,17 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-public class GUI {
-	private JFrame frame = new JFrame("ILP");
+import Solver.Solver;
+
+public class Main {
+	private JFrame frame = new JFrame("Software Engineering Final Project 2017 - Itai & Omer");
 	private JPanel panelCont = new JPanel();
 	private HomePanel homePanel = new HomePanel();
 	private ResultPanel resultPanel;
 	private CardLayout cl = new CardLayout();
 	private static Solver solve = new Solver();
 	
-	public GUI() {
+	public Main() {
 		HomePanel.setSolve(solve);
 		panelCont.setLayout(cl);
 		panelCont.add(homePanel.getPanel(), "1");
@@ -46,7 +49,7 @@ public class GUI {
 			public void run() {
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					new GUI();
+					new Main();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

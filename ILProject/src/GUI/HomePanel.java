@@ -1,3 +1,4 @@
+package GUI;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,18 +8,18 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import Objects.block;
+import Objects.file;
+import Solver.Solver;
+
 public class HomePanel extends JPanel {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel panel;
 	private JTextField filePath;
@@ -32,11 +33,16 @@ public class HomePanel extends JPanel {
 	private String objective;
 	private String subject;
 	private double time;
+	private double timeInput;
 	private int totalFreeSpace;
 	private int numOfFiles = 0;
 	private int numOfBlocks = 0;
 	private ArrayList<Integer> deleteFile;
 	private ArrayList<Integer> deleteBlock;
+	private int inputSize;
+	private int deletedB = 0;
+	private int sizeB = 0;
+	private boolean obj;
 	
 	/**
 	 * Create the panel.
@@ -109,12 +115,7 @@ public class HomePanel extends JPanel {
 		lbMin2.setBounds(355, 177, 72, 14);
 		panel.add(lbMin2);
 		lbMin2.setVisible(false);
-		
-		JProgressBar progressBar = new JProgressBar();
-		progressBar.setIndeterminate(true);
-		progressBar.setBounds(119, 218, 212, 20);
-		panel.add(progressBar);
-		
+
 		btnStart = new JButton("Start");
 		btnStart.setBounds(196, 254, 57, 23);
 		panel.add(btnStart);
@@ -130,6 +131,7 @@ public class HomePanel extends JPanel {
 				numK.setVisible(true);
 				objective = rdbtnMaximize.getText();
 				subject = lbMax2.getText();
+				obj = false;
 			}
 		});
 		
@@ -143,6 +145,7 @@ public class HomePanel extends JPanel {
 				numK.setVisible(true);
 				objective = rdbtnMinimize.getText();
 				subject = lbMin2.getText();
+				obj = true;
 			}
 		});
 			
@@ -176,16 +179,20 @@ public class HomePanel extends JPanel {
 	}
 	
 	public void startSolve() {
-		solve.solve(fileName, numK.getText());
+		solve.solve(fileName, numK.getText(), obj);
 		files = new ArrayList<file>(solve.getFiles());
 		blocks = new ArrayList<block>(solve.getBlocks());
 		output = new ArrayList<String>(solve.getOutput());
 		time = solve.getTime();
+		timeInput = solve.getTimeInput();
 		totalFreeSpace = solve.getTotalFreeSpace();
 		numOfFiles = solve.getNumOfFiles();
 		numOfBlocks = solve.getNumOfBlocks();
 		deleteFile = new ArrayList<Integer>(solve.getDeleteFile());
 		deleteBlock = new ArrayList<Integer>(solve.getDeleteBlock());
+		inputSize = solve.getInputSize();
+		deletedB = solve.getDeletedB();
+		sizeB = solve.getSizeB();
 	}
 	
 	public JPanel getPanel() {
@@ -236,6 +243,10 @@ public class HomePanel extends JPanel {
 		return time;
 	}
 
+	public double getTimeInput() {
+		return timeInput;
+	}
+
 	public int getTotalFreeSpace() {
 		return totalFreeSpace;
 	}
@@ -254,6 +265,18 @@ public class HomePanel extends JPanel {
 
 	public ArrayList<Integer> getDeleteBlock() {
 		return deleteBlock;
+	}
+
+	public int getInputSize() {
+		return inputSize;
+	}
+
+	public int getDeletedB() {
+		return deletedB;
+	}
+
+	public int getSizeB() {
+		return sizeB;
 	}
 
 }

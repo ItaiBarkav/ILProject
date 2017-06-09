@@ -1,19 +1,25 @@
+package GUI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import Objects.block;
+import Objects.file;
+
 public class ResultPanel extends JPanel {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel panel;
 	private ArrayList<file> files;
@@ -71,6 +77,52 @@ public class ResultPanel extends JPanel {
 		btnExport.setBounds(65, 267, 89, 23);
 		panel.add(btnExport);
 		
+		btnExport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				File exportFile = new File(homePanel.getFileName().substring(0, homePanel.getFileName().length()-4)+"_Result.txt");
+				
+				try {
+					
+					if(exportFile.createNewFile()) {
+						BufferedWriter writer = new BufferedWriter(new FileWriter(exportFile));
+						for(int i=0; i<output.size(); i++) {
+							writer.write(output.get(i));
+							writer.newLine();
+						}
+						writer.write("#K: " + homePanel.getNumK());
+						writer.newLine();
+						writer.write("#Processing time: " + homePanel.getTimeInput());
+						writer.newLine();
+						writer.write("#Size of input: " + homePanel.getInputSize());
+						writer.newLine();
+						writer.write("#Execution time: " + homePanel.getTime());
+						writer.newLine();
+						writer.write("#RAM: ");
+						writer.newLine();
+						writer.write("#Number of files marked for deletion by solver: " + homePanel.getNumOfFiles());
+						writer.newLine();
+						writer.write("#Number of blocks marked for deletion by solver: " + homePanel.getNumOfBlocks());
+						writer.newLine();
+						writer.write("#Number of deleted blocks: " + (homePanel.getNumOfBlocks()+homePanel.getDeletedB()));
+						writer.newLine();
+						writer.write("#Size in GBs of physical files marked for deletion by solver: " + homePanel.getTotalFreeSpace()/1000000000.0);
+						writer.newLine();
+						writer.write("#Size in GBs of physical files deleted: " + (homePanel.getTotalFreeSpace()+homePanel.getSizeB())/1000000000.0);
+						writer.newLine();
+						
+			            writer.close();
+			            JOptionPane.showMessageDialog(null, "File created !");
+				      }
+					else
+						JOptionPane.showMessageDialog(null, "File already exists. \nPlease change the name of current file.");	
+					
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
 		JLabel lblListOf = new JLabel("List of:");
 		lblListOf.setBounds(298, 120, 35, 14);
 		panel.add(lblListOf);
@@ -119,7 +171,7 @@ public class ResultPanel extends JPanel {
 		lblFileName.setText(homePanel.getFileName());
 		lblObjective.setText(homePanel.getObjective());
 		lblSubject.setText(homePanel.getNumK() + "  " + homePanel.getSubject());
-		lblTime.setText(String.valueOf(homePanel.getTime()));
+		lblTime.setText(String.valueOf((homePanel.getTime()+homePanel.getTimeInput())));
 		lblTotalFreeSpace.setText(String.valueOf(homePanel.getTotalFreeSpace()));
 		lblNumFiles.setText(String.valueOf(homePanel.getNumOfFiles()));
 		lblNumblocks.setText(String.valueOf(homePanel.getNumOfBlocks()));
@@ -133,15 +185,15 @@ public class ResultPanel extends JPanel {
 		String[] col = {"SN", "ID", "Size"};
 		String[][] fileData = new String[deleteFile.size()][3];
 		for(int i=0; i<deleteFile.size(); i++) {
-			fileData[i][0] = String.valueOf(files.get(deleteFile.get(i)).Sn);
-			fileData[i][1] = files.get(deleteFile.get(i)).Id;
-			fileData[i][2] = String.valueOf(files.get(deleteFile.get(i)).size);
+			fileData[i][0] = String.valueOf(files.get(deleteFile.get(i)).getSn());
+			fileData[i][1] = files.get(deleteFile.get(i)).getId();
+			fileData[i][2] = String.valueOf(files.get(deleteFile.get(i)).getSize());
 		}
 		String[][] blockData = new String[deleteBlock.size()][3];
 		for(int i=0; i<deleteBlock.size(); i++) {
-			blockData[i][0] = String.valueOf(blocks.get(deleteBlock.get(i)).Sn);
-			blockData[i][1] = blocks.get(deleteBlock.get(i)).Id;
-			blockData[i][2] = String.valueOf(blocks.get(deleteBlock.get(i)).size);
+			blockData[i][0] = String.valueOf(blocks.get(deleteBlock.get(i)).getSn());
+			blockData[i][1] = blocks.get(deleteBlock.get(i)).getId();
+			blockData[i][2] = String.valueOf(blocks.get(deleteBlock.get(i)).getSize());
 		}
 		
 		fileTable = new JTable(fileData, col);
@@ -158,15 +210,15 @@ public class ResultPanel extends JPanel {
 		
 		JScrollPane jspFile = new JScrollPane(fileTable);
 		jspFile.setEnabled(false);
-		jspFile.setSize(99, 145);
-		jspFile.setLocation(339, 145);
+		jspFile.setSize(140, 145);
+		jspFile.setLocation(298, 145);
 		panel.add(jspFile);
 		jspFile.setVisible(false);
 		
 		JScrollPane jspBlock = new JScrollPane(blockTable);
 		jspBlock.setEnabled(false);
-		jspBlock.setSize(99, 145);
-		jspBlock.setLocation(339, 145);
+		jspBlock.setSize(140, 145);
+		jspBlock.setLocation(298, 145);
 		panel.add(jspBlock);
 		jspBlock.setVisible(false);
 		
