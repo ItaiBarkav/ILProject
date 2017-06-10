@@ -57,20 +57,16 @@ public class ResultPanel extends JPanel {
 		lblTime2.setBounds(128, 120, 26, 14);
 		panel.add(lblTime2);
 		
-		JLabel lblRam2 = new JLabel("RAM:");
-		lblRam2.setBounds(128, 145, 26, 14);
-		panel.add(lblRam2);
-		
 		JLabel lblTotalFreeSpace2 = new JLabel("Total free space:");
-		lblTotalFreeSpace2.setBounds(72, 170, 82, 14);
+		lblTotalFreeSpace2.setBounds(72, 145, 82, 14);
 		panel.add(lblTotalFreeSpace2);
 		
 		JLabel lblNumberOfFiles2 = new JLabel("Number of  files for deletion:");
-		lblNumberOfFiles2.setBounds(17, 195, 137, 14);
+		lblNumberOfFiles2.setBounds(17, 170, 137, 14);
 		panel.add(lblNumberOfFiles2);
 		
 		JLabel lblNumberOfBlocks2 = new JLabel("Number of blocks for deletion:");
-		lblNumberOfBlocks2.setBounds(10, 220, 144, 14);
+		lblNumberOfBlocks2.setBounds(10, 195, 144, 14);
 		panel.add(lblNumberOfBlocks2);
 		
 		JButton btnExport = new JButton("Export");
@@ -97,8 +93,6 @@ public class ResultPanel extends JPanel {
 						writer.write("#Size of input: " + homePanel.getInputSize());
 						writer.newLine();
 						writer.write("#Execution time: " + homePanel.getTime());
-						writer.newLine();
-						writer.write("#RAM: ");
 						writer.newLine();
 						writer.write("#Number of files marked for deletion by solver: " + homePanel.getNumOfFiles());
 						writer.newLine();
@@ -151,20 +145,16 @@ public class ResultPanel extends JPanel {
 		lblTime.setBounds(164, 120, 82, 14);
 		panel.add(lblTime);
 		
-		JLabel lblRam = new JLabel("");
-		lblRam.setBounds(164, 145, 82, 14);
-		panel.add(lblRam);
-		
 		JLabel lblTotalFreeSpace = new JLabel("");
-		lblTotalFreeSpace.setBounds(164, 170, 82, 14);
+		lblTotalFreeSpace.setBounds(164, 145, 82, 14);
 		panel.add(lblTotalFreeSpace);
 		
 		JLabel lblNumFiles = new JLabel("");
-		lblNumFiles.setBounds(164, 195, 82, 14);
+		lblNumFiles.setBounds(164, 170, 82, 14);
 		panel.add(lblNumFiles);
 		
 		JLabel lblNumblocks = new JLabel("");
-		lblNumblocks.setBounds(164, 220, 82, 14);
+		lblNumblocks.setBounds(164, 195, 82, 14);
 		panel.add(lblNumblocks);
 		
 		
