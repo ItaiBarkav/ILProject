@@ -61,19 +61,9 @@ public class Solver {
 				f[i] = cplex.numVar(0, 1, IloNumVarType.Int);
 			for(int i=0; i<b.length; i++)
 				b[i] = cplex.numVar(0, 1, IloNumVarType.Int);
-			
-			// Calculate the K(if it's in % or not)
+					
 			int kTemp;
-        	
-        	if(K.charAt(K.length()-1) == '%') {
-        		kTemp = totalSize/100;
-        		K = K.substring(0, K.length()-1);
-        		kTemp *= Integer.parseInt(K);      		
-        	}
-        	else
-        		kTemp = Integer.parseInt(K);
-			
-        	
+			   	
         	if(obj == true) {	// Minimize objective
         		// expressions
     			IloLinearNumExpr blockSize = cplex.linearNumExpr();
@@ -87,7 +77,16 @@ public class Solver {
 
             	// define objective - Sum of all fj
             	cplex.addMinimize(objective);
-            	      	
+            	 
+            	// Calculate the K(if it's in % or not)
+            	if(K.charAt(K.length()-1) == '%') {
+            		kTemp = totalSize/100;
+            		K = K.substring(0, K.length()-1);
+            		kTemp *= Integer.parseInt(K);      		
+            	}
+            	else
+            		kTemp = Integer.parseInt(K);
+            	
             	// constraints
             	cplex.addGe(blockSize, kTemp);
             	
@@ -112,6 +111,15 @@ public class Solver {
             	// define objective - Sum of all bi*bi.size
             	cplex.addMaximize(objective);
             	      	
+            	// Calculate the K(if it's in % or not)
+            	if(K.charAt(K.length()-1) == '%') {
+            		kTemp = files.size()/100;
+            		K = K.substring(0, K.length()-1);
+            		kTemp *= Integer.parseInt(K);      		
+            	}
+            	else
+            		kTemp = Integer.parseInt(K);
+            	
             	// constraints
             	cplex.addLe(fileNum, kTemp);
             	
@@ -122,8 +130,7 @@ public class Solver {
             			cplex.addLe(b[i], f[arr[j]]);
             	}
         	}
-			
-        	
+			      	
         	// solve
         	if (cplex.solve()) {
         		for (int i=0; i<f.length; i++) {
