@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -120,6 +121,31 @@ public class HomePanel extends JPanel {
 		btnStart.setBounds(196, 254, 57, 23);
 		panel.add(btnStart);
 		btnStart.setEnabled(false);
+		
+		JButton btnHelp = new JButton("Help");
+		btnHelp.setBounds(387, 7, 53, 23);
+		panel.add(btnHelp);
+		
+		btnHelp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(panel,
+						"                                                                   Using our System\n\n"
+					    + "Welcome to our Software Engineering Final Project 2017 - Itai & Omer.\n\n"
+					    + "In order to upload file for analysis click on 'Browse' and select a .txt file.\n"
+					    + "You can select one from the two objective options:\n\n"
+					    + "     1. Minimize   \u03A3 file - In this option you need to select the minimum amount of space to free.\n"
+					    + "		         The system will try to minimize the number of files for deletion, considering the number you entered.\n"
+					    + "         Note : The minimum amount of space to free can be entered in percentages (by adding '%' in the\n" 
+					    + "                     end of the number).\n\n"
+					    + "     2. Maximize  \u03A3 block.size - In this option you need to select the maximum number of files to delete.\n"
+					    + "		         The system will try to maximize the amount of space to free, considering the number you entered.\n"
+					    + "         Note : The maximum number of files to delete can be entered in percentages (by adding '%' in the\n" 
+					    + "                     end of the number).\n\n"
+					    + "Click on the 'Start' to run the file analysis on the given input.",
+					    "Help Information",
+					    JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
 		
 		rdbtnMaximize.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -278,5 +304,4 @@ public class HomePanel extends JPanel {
 	public int getSizeB() {
 		return sizeB;
 	}
-
 }

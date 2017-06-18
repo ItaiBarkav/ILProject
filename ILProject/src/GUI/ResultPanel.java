@@ -53,12 +53,12 @@ public class ResultPanel extends JPanel {
 		lblSubject2.setBounds(206, 65, 40, 14);
 		panel.add(lblSubject2);
 		
-		JLabel lblTime2 = new JLabel("Time:");
-		lblTime2.setBounds(128, 120, 26, 14);
+		JLabel lblTime2 = new JLabel("Time (sec):");
+		lblTime2.setBounds(99, 120, 55, 14);
 		panel.add(lblTime2);
 		
-		JLabel lblTotalFreeSpace2 = new JLabel("Total free space:");
-		lblTotalFreeSpace2.setBounds(72, 145, 82, 14);
+		JLabel lblTotalFreeSpace2 = new JLabel("Total free space (bytes):");
+		lblTotalFreeSpace2.setBounds(34, 145, 120, 14);
 		panel.add(lblTotalFreeSpace2);
 		
 		JLabel lblNumberOfFiles2 = new JLabel("Number of  files for deletion:");
@@ -72,6 +72,26 @@ public class ResultPanel extends JPanel {
 		JButton btnExport = new JButton("Export");
 		btnExport.setBounds(65, 267, 89, 23);
 		panel.add(btnExport);
+		
+		JButton btnHelp = new JButton("Help");
+		btnHelp.setBounds(387, 7, 53, 23);
+		panel.add(btnHelp);
+		
+		btnHelp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(panel,
+						"                                                                   Using our System - Results\n\n"
+					    + "In this window you can see the all information after the file analysis has done.\n\n"
+					    + "The running time and the achieved total free space are shown, and also\n"
+					    + "the numbers of files and blocks that are candidates to be deleted.\n\n"
+					    + "Click on the files button in order to get the list of these files that are recommend to be deleted.\n"
+					    + "In a similar way, click on the blocks button in order to get the list of these blocks that are recommend to be deleted.\n\n"
+					    + "You can get an extra information by clicking the 'Export' button.\n"
+					    + "A new text file contains this information will be create and store in the same path of the input file.",
+					    "Help Information",
+					    JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
 		
 		btnExport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
