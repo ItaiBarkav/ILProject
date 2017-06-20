@@ -12,11 +12,11 @@ import Objects.block;
 import Objects.file;
 
 public class FileAnalysis {
-	private ArrayList<file> files = new ArrayList<file>();
-	private ArrayList<block> blocks = new ArrayList<block>();
-	private ArrayList<String> output = new ArrayList<String>();
-	private int totalSize = 0;
-	private int inputSize = 0;
+	private ArrayList<file> files = new ArrayList<file>();			// Array that represent the files in the file system.
+	private ArrayList<block> blocks = new ArrayList<block>();		// Array that represent the blocks in the file system.
+	private ArrayList<String> output = new ArrayList<String>();		// Save the relevant information about the file system (to the export file).
+	private int totalSize = 0;										// Save the size of data in the file system.
+	private int inputSize = 0;										// Save the size of the files&blocks arrays.
 
 	public FileAnalysis(String fileName) {
 		File file = new File(fileName);
@@ -36,7 +36,7 @@ public class FileAnalysis {
 			    
 			    if(st.charAt(0)=='F') {	// If it's file
 			    	
-			    	String[] fTemp = st.split(",");
+			    	String[] fTemp = st.split(",");		//	Split the line by the text file form.
 			    	int fSize = 0, fj = 0;
 			    	int[] BlocksID = new int[Integer.parseInt(fTemp[4])];
 
@@ -56,7 +56,7 @@ public class FileAnalysis {
 			    
 			    if(st.charAt(0)=='B') {	// If it's block
 			    	
-			    	String[] bTemp = st.split(",");
+			    	String[] bTemp = st.split(",");		//	Split the line by the text file form.
 			    	int bj = 0;
 			    	int[] FilesID = new int[Integer.parseInt(bTemp[3])];
 
@@ -69,11 +69,11 @@ public class FileAnalysis {
 					inputSize += 20 + 4*b.getNumOfFiles();
 			    }// End if(B)
 			    
-			    if(st.charAt(0)=='D') {	//Finish read file
+			    if(st.charAt(0)=='D') {	//	Finish read file
 			    	break;	
 			    }// End if(D)
 			    
-			    if(st.charAt(0)=='#') {	// Info to export file
+			    if(st.charAt(0)=='#') {	//	Info to export file
 			    	output.add(st);
 			    }// End if(#)
 			}// End while

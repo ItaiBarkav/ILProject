@@ -34,6 +34,7 @@ public class Solver {
 		
 		this.fileName = fileName;
 		
+		//	Read from file and build the data
 		FileAnalysis FA = new FileAnalysis(fileName);
 		
 		files = FA.getFiles();
@@ -133,6 +134,7 @@ public class Solver {
 			      	
         	// solve
         	if (cplex.solve()) {
+        		//	Mark the files to deletion
         		for (int i=0; i<f.length; i++) {
         			if(cplex.getValue(f[i]) == 1) {
         				files.get(i).setDelete(1);
@@ -141,6 +143,7 @@ public class Solver {
         			}
         		}
 
+        		//	Mark the blocks to deletion        		
         		for (int i=0; i<b.length; i++) {
         			if(cplex.getValue(b[i]) == 1) {
         				blocks.get(i).setDelete(1);
@@ -154,6 +157,7 @@ public class Solver {
         		
         		int check = 0;
         		
+        		//	Check if there is blocks that didn't delete although their files marked as deleted
         		for(int i=0; i<blocks.size();i++)
         			if(blocks.get(i).getDelete() == 0) {
         				check = 0;

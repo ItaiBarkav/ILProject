@@ -22,13 +22,13 @@ public class ResultPanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel panel;
-	private ArrayList<file> files;
-	private ArrayList<block> blocks;
-	private ArrayList<String> output;
-	private JTable fileTable;
-	private JTable blockTable;
-	private ArrayList<Integer> deleteFile;
-	private ArrayList<Integer> deleteBlock;
+	private ArrayList<file> files;				// 	Array that represent the files in the file system.
+	private ArrayList<block> blocks;			//  Array that represent the blocks in the file system.
+	private ArrayList<String> output;			//  Save the relevant information about the file system (to the export file).
+	private JTable fileTable;					//	Table for the files to deletion.
+	private JTable blockTable;					//	Table for the blocks to deletion.
+	private ArrayList<Integer> deleteFile;		//  Array that save the files for deletion after the analysis.
+	private ArrayList<Integer> deleteBlock;		//  Array that save the blocks for deletion after the analysis.
 
 	/**
 	 * Create the panel.
@@ -77,6 +77,7 @@ public class ResultPanel extends JPanel {
 		btnHelp.setBounds(387, 7, 53, 23);
 		panel.add(btnHelp);
 		
+		//	Help window
 		btnHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(panel,
@@ -93,6 +94,7 @@ public class ResultPanel extends JPanel {
 			}
 		});
 		
+		//	Export to file
 		btnExport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -192,6 +194,7 @@ public class ResultPanel extends JPanel {
 		deleteFile = new ArrayList<Integer>(homePanel.getDeleteFile());
 		deleteBlock = new ArrayList<Integer>(homePanel.getDeleteBlock());
 		
+		//	Data for the files&blocks tables
 		String[] col = {"SN", "ID", "Size"};
 		String[][] fileData = new String[deleteFile.size()][3];
 		for(int i=0; i<deleteFile.size(); i++) {
@@ -232,6 +235,7 @@ public class ResultPanel extends JPanel {
 		panel.add(jspBlock);
 		jspBlock.setVisible(false);
 		
+		//	Show files table
 		rdbtnFiles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				rdbtnBlocks.setSelected(false);
@@ -241,6 +245,7 @@ public class ResultPanel extends JPanel {
 			}
 		});
 		
+		//	Show blocks table
 		rdbtnBlocks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				rdbtnFiles.setSelected(false);

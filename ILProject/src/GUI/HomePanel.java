@@ -23,27 +23,27 @@ public class HomePanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel panel;
-	private JTextField filePath;
-	private String fileName = null;
-	private JTextField numK;
-	private JButton btnStart;
-	private static Solver solve;
-	private ArrayList<file> files;
-	private ArrayList<block> blocks;
-	private ArrayList<String> output;
-	private String objective;
-	private String subject;
-	private double time;
-	private double timeInput;
-	private int totalFreeSpace;
-	private int numOfFiles = 0;
-	private int numOfBlocks = 0;
-	private ArrayList<Integer> deleteFile;
-	private ArrayList<Integer> deleteBlock;
-	private int inputSize;
-	private int deletedB = 0;
-	private int sizeB = 0;
-	private boolean obj;
+	private JTextField filePath;				//	Show the path of the file to analysis.
+	private String fileName = null;				//  Keep the path to the file to analysis.
+	private JTextField numK;					//	The field of number that the user enter as constraint. 
+	private JButton btnStart;					//	Start button.
+	private static Solver solve;				//	Solver object to solve the ILP problem by CPLEX.
+	private ArrayList<file> files;				// 	Array that represent the files in the file system.
+	private ArrayList<block> blocks;			//  Array that represent the blocks in the file system.
+	private ArrayList<String> output;			//  Save the relevant information about the file system (to the export file).
+	private String objective;					//	The objective that the user select.
+	private String subject;						//	The subject that the user select by the objective.
+	private double time;						// 	Saving the execution time.
+	private double timeInput;					//  Saving the time of creating the input (files&blocks arrays).
+	private int totalFreeSpace;					//  Keep the size of the total free space after the analysis.
+	private int numOfFiles = 0;					//  Keep the number of the files for deletion after the analysis.
+	private int numOfBlocks = 0;				//  Keep the number of the blocks for deletion after the analysis.
+	private ArrayList<Integer> deleteFile;		//  Array that save the files for deletion after the analysis.
+	private ArrayList<Integer> deleteBlock;		//  Array that save the blocks for deletion after the analysis.
+	private int inputSize;						//  Save the size of the files&blocks arrays.
+	private int deletedB = 0;					//  Keep the number of the blocks for deletion after the analysis that the solver doesn't delete them.
+	private int sizeB = 0;						//  Keep the size of the total free space after the analysis that the solver doesn't delete them.
+	private boolean obj;						//	Indicate which objective selected by the user Minimize (true) Maximize (false).
 	
 	/**
 	 * Create the panel.
@@ -126,6 +126,7 @@ public class HomePanel extends JPanel {
 		btnHelp.setBounds(387, 7, 53, 23);
 		panel.add(btnHelp);
 		
+		//	Help window
 		btnHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(panel,
@@ -147,6 +148,7 @@ public class HomePanel extends JPanel {
 			}
 		});
 		
+		//	Maximize objective 
 		rdbtnMaximize.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				rdbtnMinimize.setSelected(false);
@@ -161,6 +163,7 @@ public class HomePanel extends JPanel {
 			}
 		});
 		
+		//	Minimize objective
 		rdbtnMinimize.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				rdbtnMaximize.setSelected(false);
@@ -204,6 +207,7 @@ public class HomePanel extends JPanel {
 				
 	}
 	
+	//	This function start the file analysis process
 	public void startSolve() {
 		solve.solve(fileName, numK.getText(), obj);
 		files = new ArrayList<file>(solve.getFiles());

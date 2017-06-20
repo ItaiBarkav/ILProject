@@ -2,12 +2,12 @@ package Objects;
 import java.util.Arrays;
 
 public class file {
-	private int Sn;
-	private String Id;
-	private int size;
-	private int Delete;
-	private int NumOfBlocks;
-	private int[] BlocksID;
+	private int Sn;				//	The serial number of the file.
+	private String Id;			//	The id of the file.
+	private int size;			//	The size of the file.
+	private int Delete;			//	This field indicates whether the file is deleted (1) or not (0).
+	private int NumOfBlocks;	//	The number of blocks that make up the file.
+	private int[] BlocksID;		//	Array of id's of blocks that make up the file.
 	
 	public file(int sn, String id, int size, int numOfBlocks, int[] blocksID) {
 		super();
