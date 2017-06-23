@@ -15,7 +15,7 @@ public class FileAnalysis {
 	private ArrayList<file> files = new ArrayList<file>();			// Array that represent the files in the file system.
 	private ArrayList<block> blocks = new ArrayList<block>();		// Array that represent the blocks in the file system.
 	private ArrayList<String> output = new ArrayList<String>();		// Save the relevant information about the file system (to the export file).
-	private int totalSize = 0;										// Save the size of data in the file system.
+	private long totalSize = 0;										// Save the size of data in the file system.
 	private int inputSize = 0;										// Save the size of the files&blocks arrays.
 
 	public FileAnalysis(String fileName) {
@@ -104,7 +104,7 @@ public class FileAnalysis {
 		return output;
 	}
 
-	public int getTotalSize() {
+	public long getTotalSize() {
 		return totalSize;
 	}
 

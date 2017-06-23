@@ -18,15 +18,15 @@ public class Solver {
 	private double time;													// Saving the execution time.
 	private double timeInput;												// Saving the time of creating the input (files&blocks arrays).
 	private IloCplex cplex;													// The CPLEX model.
-	private int totalFreeSpace = 0;											// Keep the size of the total free space after the analysis.
+	private long totalFreeSpace = 0;											// Keep the size of the total free space after the analysis.
 	private int numOfFiles = 0;												// Keep the number of the files for deletion after the analysis.
 	private int numOfBlocks = 0;											// Keep the number of the blocks for deletion after the analysis.
 	private ArrayList<Integer> deleteFile = new ArrayList<Integer>();		// Array that save the files for deletion after the analysis.
 	private ArrayList<Integer> deleteBlock = new ArrayList<Integer>();		// Array that save the blocks for deletion after the analysis.
-	private int totalSize = 0;												// Save the size of data in the file system.
+	private long totalSize = 0;												// Save the size of data in the file system.
 	private int inputSize = 0;												// Save the size of the files&blocks arrays.
 	private int deletedB = 0;												// Keep the number of the blocks for deletion after the analysis that the solver doesn't delete them.
-	private int sizeB = 0;													// Keep the size of the total free space after the analysis that the solver doesn't delete them.
+	private long sizeB = 0;													// Keep the size of the total free space after the analysis that the solver doesn't delete them.
 	
 	public void solve(String fileName, String K, boolean obj) {
 		
@@ -63,7 +63,7 @@ public class Solver {
 			for(int i=0; i<b.length; i++)
 				b[i] = cplex.numVar(0, 1, IloNumVarType.Int);
 					
-			int kTemp;
+			long kTemp;
 			   	
         	if(obj == true) {	// Minimize objective
         		// expressions
@@ -209,7 +209,7 @@ public class Solver {
 		return timeInput;
 	}
 
-	public int getTotalFreeSpace() {
+	public long getTotalFreeSpace() {
 		return totalFreeSpace;
 	}
 
@@ -229,7 +229,7 @@ public class Solver {
 		return deleteBlock;
 	}
 
-	public int getTotalSize() {
+	public long getTotalSize() {
 		return totalSize;
 	}
 
@@ -241,7 +241,7 @@ public class Solver {
 		return deletedB;
 	}
 
-	public int getSizeB() {
+	public long getSizeB() {
 		return sizeB;
 	}
 	

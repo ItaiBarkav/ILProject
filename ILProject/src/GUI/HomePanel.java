@@ -18,6 +18,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import Objects.block;
 import Objects.file;
 import Solver.Solver;
+import java.awt.Color;
 
 public class HomePanel extends JPanel {
 	
@@ -35,16 +36,15 @@ public class HomePanel extends JPanel {
 	private String subject;						//	The subject that the user select by the objective.
 	private double time;						// 	Saving the execution time.
 	private double timeInput;					//  Saving the time of creating the input (files&blocks arrays).
-	private int totalFreeSpace;					//  Keep the size of the total free space after the analysis.
+	private long totalFreeSpace;					//  Keep the size of the total free space after the analysis.
 	private int numOfFiles = 0;					//  Keep the number of the files for deletion after the analysis.
 	private int numOfBlocks = 0;				//  Keep the number of the blocks for deletion after the analysis.
 	private ArrayList<Integer> deleteFile;		//  Array that save the files for deletion after the analysis.
 	private ArrayList<Integer> deleteBlock;		//  Array that save the blocks for deletion after the analysis.
 	private int inputSize;						//  Save the size of the files&blocks arrays.
 	private int deletedB = 0;					//  Keep the number of the blocks for deletion after the analysis that the solver doesn't delete them.
-	private int sizeB = 0;						//  Keep the size of the total free space after the analysis that the solver doesn't delete them.
-	private boolean obj;						//	Indicate which objective selected by the user Minimize (true) Maximize (false).
-	
+	private long sizeB = 0;						//  Keep the size of the total free space after the analysis that the solver doesn't delete them.
+	private boolean obj;						//	Indicate which objective selected by the user Minimize (true) Maximize (false).	
 	/**
 	 * Create the panel.
 	 */
@@ -59,10 +59,21 @@ public class HomePanel extends JPanel {
 		lblWithDeduplicationUsing.setBounds(142, 30, 165, 14);
 		panel.add(lblWithDeduplicationUsing);
 		
+		JRadioButton rdbtnMinimize = new JRadioButton("Minimize   \u03A3 file");
+		rdbtnMinimize.setBounds(119, 110, 97, 23);
+		panel.add(rdbtnMinimize);
+		rdbtnMinimize.setEnabled(false);
+		
+		JRadioButton rdbtnMaximize = new JRadioButton("Maximize  \u03A3 block.size");
+		rdbtnMaximize.setBounds(119, 136, 129, 23);
+		panel.add(rdbtnMaximize);
+		rdbtnMaximize.setEnabled(false);
+		
 		filePath = new JTextField();
 		filePath.setBounds(119, 67, 212, 20);
 		panel.add(filePath);
 		filePath.setColumns(10);
+		filePath.setEditable(false);
 				
 		Button btnChooseFile = new Button("Browse");
 		btnChooseFile.addActionListener(new ActionListener() {
@@ -70,9 +81,14 @@ public class HomePanel extends JPanel {
 				JFileChooser fc = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT file", "txt");
 				fc.setFileFilter(filter);
+				fc.setAcceptAllFileFilterUsed(false);
 				if(fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					filePath.setText(fc.getSelectedFile().toString());
 					fileName = fc.getSelectedFile().toString();
+				}
+				if(fileName != null) {
+					rdbtnMinimize.setEnabled(true);
+					rdbtnMaximize.setEnabled(true);				
 				}
 			}
 		});
@@ -82,15 +98,7 @@ public class HomePanel extends JPanel {
 		JLabel lblSelectObjective = new JLabel("Select Objective:");
 		lblSelectObjective.setBounds(31, 114, 82, 14);
 		panel.add(lblSelectObjective);
-		
-		JRadioButton rdbtnMinimize = new JRadioButton("Minimize   \u03A3 file");
-		rdbtnMinimize.setBounds(119, 110, 97, 23);
-		panel.add(rdbtnMinimize);
-		
-		JRadioButton rdbtnMaximize = new JRadioButton("Maximize  \u03A3 block.size");
-		rdbtnMaximize.setBounds(119, 136, 129, 23);
-		panel.add(rdbtnMaximize);
-		
+					
 		JLabel lbMax = new JLabel("Select the maximum number of file to deletion:");
 		lbMax.setBounds(35, 177, 222, 14);
 		panel.add(lbMax);
@@ -125,6 +133,12 @@ public class HomePanel extends JPanel {
 		JButton btnHelp = new JButton("Help");
 		btnHelp.setBounds(387, 7, 53, 23);
 		panel.add(btnHelp);
+		
+		JLabel lblError = new JLabel("Please, insert a valid number or percentage ");
+		lblError.setForeground(Color.RED);
+		lblError.setBounds(119, 202, 212, 14);
+		panel.add(lblError);
+		lblError.setVisible(false);
 		
 		//	Help window
 		btnHelp.addActionListener(new ActionListener() {
@@ -197,14 +211,35 @@ public class HomePanel extends JPanel {
 				changed();
 			}
 			
+			//	Function to check validation of the number to constraint
 			public void changed() {
-				if(numK.getText().equals("") || fileName == null)
-					btnStart.setEnabled(false);
-				else
+				int check = 0;
+				
+				for(int i=0; i<numK.getText().length(); i++)
+					if(numK.getText().charAt(i) < '0' || numK.getText().charAt(i) > '9') {
+						check++;
+						if(i == numK.getText().length()-1 && check == 1 && i != 0)
+							if(numK.getText().charAt(i) == '%')
+								check = 0;
+					}					
+
+				if(numK.getText().equals("") || check != 0) {
+					if(check == 0 && numK.getText().length() > 0 && numK.getText().charAt(numK.getText().length()-1) == '%') {
+						lblError.setVisible(false);
+						btnStart.setEnabled(true);
+					}					
+					else {
+						lblError.setVisible(true);
+						btnStart.setEnabled(false);
+					}					
+				}
+				else {
+					lblError.setVisible(false);
 					btnStart.setEnabled(true);
+				}
 			}
 		});
-				
+	
 	}
 	
 	//	This function start the file analysis process
@@ -277,7 +312,7 @@ public class HomePanel extends JPanel {
 		return timeInput;
 	}
 
-	public int getTotalFreeSpace() {
+	public long getTotalFreeSpace() {
 		return totalFreeSpace;
 	}
 
@@ -305,7 +340,8 @@ public class HomePanel extends JPanel {
 		return deletedB;
 	}
 
-	public int getSizeB() {
+	public long getSizeB() {
 		return sizeB;
 	}
+
 }
