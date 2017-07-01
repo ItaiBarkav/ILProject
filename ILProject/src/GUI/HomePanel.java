@@ -59,13 +59,13 @@ public class HomePanel extends JPanel {
 		lblWithDeduplicationUsing.setBounds(142, 30, 165, 14);
 		panel.add(lblWithDeduplicationUsing);
 		
-		JRadioButton rdbtnMinimize = new JRadioButton("Minimize   \u03A3 file");
-		rdbtnMinimize.setBounds(119, 110, 97, 23);
+		JRadioButton rdbtnMinimize = new JRadioButton("Minimize   the number of files for deletion (\u03A3 file)");
+		rdbtnMinimize.setBounds(119, 110, 255, 23);
 		panel.add(rdbtnMinimize);
 		rdbtnMinimize.setEnabled(false);
 		
-		JRadioButton rdbtnMaximize = new JRadioButton("Maximize  \u03A3 block.size");
-		rdbtnMaximize.setBounds(119, 136, 129, 23);
+		JRadioButton rdbtnMaximize = new JRadioButton("Maximize  the amount of memory to free (\u03A3 block.size)");
+		rdbtnMaximize.setBounds(119, 136, 285, 23);
 		panel.add(rdbtnMaximize);
 		rdbtnMaximize.setEnabled(false);
 		
@@ -99,13 +99,13 @@ public class HomePanel extends JPanel {
 		lblSelectObjective.setBounds(31, 114, 82, 14);
 		panel.add(lblSelectObjective);
 					
-		JLabel lbMax = new JLabel("Select the maximum number of file to deletion:");
-		lbMax.setBounds(35, 177, 222, 14);
+		JLabel lbMax = new JLabel("Select the maximal number of files for deletion:");
+		lbMax.setBounds(31, 177, 226, 14);
 		panel.add(lbMax);
 		lbMax.setVisible(false);
 		
-		JLabel lbMin = new JLabel("Select the minimum number of space to free:");
-		lbMin.setBounds(35, 177, 214, 14);
+		JLabel lbMin = new JLabel("Select the minimal amount of memory to free:");
+		lbMin.setBounds(31, 177, 218, 14);
 		panel.add(lbMin);
 		lbMin.setVisible(false);
 		
@@ -139,6 +139,13 @@ public class HomePanel extends JPanel {
 		lblError.setBounds(119, 202, 212, 14);
 		panel.add(lblError);
 		lblError.setVisible(false);
+		
+		JLabel lblStart = new JLabel("Note: Once you click 'Start' the system will start processing");
+		lblStart.setForeground(Color.BLUE);
+		lblStart.setBounds(84, 229, 282, 14);
+		panel.add(lblStart);
+		lblStart.setVisible(false);
+		
 		
 		//	Help window
 		btnHelp.addActionListener(new ActionListener() {
@@ -226,15 +233,18 @@ public class HomePanel extends JPanel {
 				if(numK.getText().equals("") || check != 0) {
 					if(check == 0 && numK.getText().length() > 0 && numK.getText().charAt(numK.getText().length()-1) == '%') {
 						lblError.setVisible(false);
+						lblStart.setVisible(true);
 						btnStart.setEnabled(true);
 					}					
 					else {
 						lblError.setVisible(true);
+						lblStart.setVisible(false);
 						btnStart.setEnabled(false);
 					}					
 				}
 				else {
 					lblError.setVisible(false);
+					lblStart.setVisible(true);
 					btnStart.setEnabled(true);
 				}
 			}
@@ -343,5 +353,4 @@ public class HomePanel extends JPanel {
 	public long getSizeB() {
 		return sizeB;
 	}
-
 }

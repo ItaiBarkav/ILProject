@@ -1,6 +1,8 @@
 package Solver;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import Objects.block;
 import Objects.file;
 import ilog.concert.IloException;
@@ -174,7 +176,8 @@ public class Solver {
         		
         	}
         	else {
-        		System.out.println("problem not solved");
+        		if(JOptionPane.showConfirmDialog(null, "You entered an inappropriate file!\n      Problem not solved.", "Error message", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE)==0)
+        			System.exit(0);
         	}
         	
         	cplex.end();
