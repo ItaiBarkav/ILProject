@@ -226,10 +226,10 @@ public class HomePanel extends JPanel {
 					if(numK.getText().charAt(i) < '0' || numK.getText().charAt(i) > '9') {
 						check++;
 						if(i == numK.getText().length()-1 && check == 1 && i != 0)
-							if(numK.getText().charAt(i) == '%')
+							if(numK.getText().charAt(i) == '%' && Integer.valueOf(numK.getText().substring(0, numK.getText().length()-1))<=100)
 								check = 0;
-					}					
-
+					}
+				
 				if(numK.getText().equals("") || check != 0) {
 					if(check == 0 && numK.getText().length() > 0 && numK.getText().charAt(numK.getText().length()-1) == '%') {
 						lblError.setVisible(false);
